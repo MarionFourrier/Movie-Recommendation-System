@@ -11,8 +11,9 @@ import matplotlib.pyplot as plt
 import functions_dashboard as fd
 import clean_dataframe as clean
 
-
-# 4. Data_selection
+##########
+# 1. Data_selection
+##########
 
 df_title_basics_year = clean.df_title_basics_clean.loc[clean.df_title_basics_clean["startYear"] != 0]
 
@@ -22,7 +23,9 @@ convert_dict = {"startYear": str}
 # Change Data type in dataframe based on conversion dictionary
 df_title_basics_year = df_title_basics_year.astype(convert_dict)
 
+##########
 
+##########
 def histogram_year():
 
     """
