@@ -1,5 +1,6 @@
 import pandas as pd
 import functions_dashboard as fd
+from PIL import Image
 
 # 1. Google drive directory of each team member
 directory_aurelien = "G:\\.shortcut-targets-by-id\\1ISrfbm7zzuVqO7_ibsR8dnoL6hna0X6B\\PROJET 2\\csv_clean\\"
@@ -24,4 +25,8 @@ df_name_basics_clean = fd.read_database(link_name_basics_clean, ",")
 df_name_basics_keys = fd.read_database(link_name_basics_keys, ",")
 df_title_principals_clean = fd.read_database(link_title_principals_clean, ",")
 df_title_rating_clean = fd.read_database(link_title_rating_clean, ",")
+
+# 4. import dashboard image
+link_dashboard_picture = f"G:\\.shortcut-targets-by-id\\1ISrfbm7zzuVqO7_ibsR8dnoL6hna0X6B\\PROJET 2\\Dashboard\\cinema.jpg"
+dashboard_img = Image.open(link_dashboard_picture)
 
