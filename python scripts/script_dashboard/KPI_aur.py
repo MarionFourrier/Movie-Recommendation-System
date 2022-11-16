@@ -1,4 +1,4 @@
-# Axe 1 => Movies per year
+# Axe => Movies per year
 
 # Import libraries
 import pandas as pd
@@ -7,6 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import seaborn as sns
 import matplotlib.pyplot as plt
+import sys
 
 # Import modules
 import clean_dataframe as clean
@@ -18,6 +19,10 @@ import functions_dashboard as fd
 
 # A. Movies per year
 # ----------
+
+# get size of dataframe to be used
+print(sys.getsizeof(clean.df_title_basics_clean))
+
 # Retreive dataframe title basic from module clean dataframe
 df_movies_year = clean.df_title_basics_clean.loc[clean.df_title_basics_clean["startYear"] != 0]
 
