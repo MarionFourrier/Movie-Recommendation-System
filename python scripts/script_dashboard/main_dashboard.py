@@ -1,5 +1,6 @@
 # Import libraries
 import streamlit as st
+import pandas as pd
 from st_aggrid import AgGrid
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -19,16 +20,16 @@ import KPI_moh
 # -----------
 
 # To run the file from project Python, write the following command in terminal:
-# streamlit run "python scripts\\script_dashboard\\main_dashboard.py"
+# streamlit run "script_dashboard\\main_dashboard.py"
 
 # Streamlit page configuration
-st.set_page_config(page_title="DataFilm - Plateforme de recommandation",
+st.set_page_config(page_title="CineCreuse - N°1 sur les films",
                    layout='wide',
                    page_icon=':cinema:')
 
 # Picture and dashboard title
 st.image(clean.dashboard_img)
-st.title("Plateforme d'analyse de films")
+st.title("Bienvenue sur CineCreuse")
 
 # Implement selection widgets in sidebar
 starting_year = st.sidebar. number_input('Choisissez une année de départ',
@@ -50,6 +51,13 @@ start_votes, end_votes = st.sidebar.select_slider(
         value=(KPI_aur.df_movies_year_run_ratings["numVotes"].min(),
                KPI_aur.df_movies_year_run_ratings["numVotes"].max()+1)
 )
+
+genre_clean = pd.Series(clean.df_title_genre_clean["genres"].unique())
+genre_clean.drop(genre_clean.index[[4, 9, 24]],
+                 inplace=True)
+
+list_genres = st.sidebar.multiselect('Sélectionnez votre genre',
+                                     options=genre_clean.sort_values())
 
 # B. Define first dashboard part
 # ----------
@@ -113,7 +121,8 @@ with tab3_ax1:
 with tab4_ax1:
     fig_tab4_ax1 = KPI_aur.top_20_year(starting_year,
                                        ending_year,
-                                       [elem for elem in range(start_votes, end_votes)])
+                                       [elem for elem in range(start_votes, end_votes)],
+                                       list_genres)
     AgGrid(fig_tab4_ax1,
            fit_columns_on_grid_load=True)
 

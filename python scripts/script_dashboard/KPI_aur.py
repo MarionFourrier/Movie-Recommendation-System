@@ -50,7 +50,7 @@ convert_dict = {"startYear": str}
 # Change Data type in dataframe based on conversion dictionary
 gb_movies_year = gb_movies_year.astype(convert_dict)
 
-# B. Average lenght per year
+# B. Average length per year
 # ----------
 # Delete movies with runtime at 0
 df_movies_year_run = df_movies_year.loc[clean.df_title_basics_clean["runtimeMinutes"] != 0]
@@ -312,20 +312,55 @@ def average_length_rating():
 # ----------
 
 
-def top_20_year(starting_year, ending_year, list_votes):
+def top_20_year(starting_year, ending_year, list_votes, list_genre):
     """
     Return the top 10 based on ratings
     :param starting_year: starting point of selection
     :param ending_year: ending point of selection
     :param list_votes: selection on number of votes
+    :param list_genre: selection on genre
     :return: dataframe with 10 best rated movies on the period
     """
     # Keep only needed columns
-    df_top_20 = df_movies_year_run_ratings.loc[:, ["primaryTitle",
+    df_top_20 = df_movies_year_run_ratings.loc[:, ["tconst",
                                                    "startYear",
                                                    "runtimeMinutes",
                                                    "averageRating",
                                                    "numVotes"]]
+
+    # Merge with title_akas to get french title
+    df_top_20 = pd.merge(df_top_20,
+                         clean.df_title_akas_clean,
+                         how='inner',
+                         left_on='tconst',
+                         right_on='titleId')
+
+    # Keep only line with a French title
+    df_top_20 = df_top_20.loc[df_top_20["region"] == "FR"]
+
+    # Merge with title genre clean
+    df_top_20 = pd.merge(df_top_20,
+                         clean.df_title_genre_clean,
+                         how='inner',
+                         on='tconst')
+
+    # Filter on selected genre
+    if len(list_genre) == 0:
+        pass
+    else:
+        df_top_20 = df_top_20.loc[df_top_20["genres"].isin(list_genre)]
+
+    # Drop duplicates
+    df_top_20.drop_duplicates(subset=["tconst"],
+                             inplace=True,
+                             ignore_index=True)
+
+    # Keep only needed columns
+    df_top_20 = df_top_20.loc[:, ["title",
+                                  "startYear",
+                                  "runtimeMinutes",
+                                  "averageRating",
+                                  "numVotes"]]
 
     # Filter on selected years
     df_top_20 = df_top_20.loc[(df_top_20["startYear"] >= starting_year) &
@@ -335,11 +370,11 @@ def top_20_year(starting_year, ending_year, list_votes):
     df_top_20 = df_top_20.loc[df_top_20["numVotes"].isin(list_votes)]
 
     # sort in descending order according to rating and number of vote in second
-    df_top_20.sort_values(["averageRating","numVotes"],
+    df_top_20.sort_values(["averageRating", "numVotes"],
                           ascending=False,
                           inplace=True)
 
-    # Keep only 10 firt lines
+    # Keep only 20 first lines
     df_top_20 = df_top_20.iloc[:20]
 
     # Reset index and delete former one
@@ -351,7 +386,7 @@ def top_20_year(starting_year, ending_year, list_votes):
     df_top_20.index += 1
 
     # Rename columns title
-    df_top_20.rename(columns={"primaryTitle": "Titre",
+    df_top_20.rename(columns={"title": "Titre",
                               "startYear": "Année",
                               "runtimeMinutes": "Durée (min)",
                               "averageRating": "Note moyenne",
@@ -361,7 +396,7 @@ def top_20_year(starting_year, ending_year, list_votes):
     return df_top_20
 
 # to include in main at consolidation stage
-#df_top_20_year = top_20_year(2000, 2005)
+# df_top_20_year = top_20_year(2000, 2022, [elem for elem in range(389, 2000000)])
 
 # E. Scatter plot rating with number of votes
 # ----------
