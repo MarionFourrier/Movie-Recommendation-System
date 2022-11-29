@@ -23,13 +23,14 @@ import KPI_moh
 # streamlit run "script_dashboard\\main_dashboard.py"
 
 # Streamlit page configuration
-st.set_page_config(page_title="CineCreuse - N°1 sur les films",
+st.set_page_config(page_title="CinéCreuse - N°1 sur les films",
                    layout='wide',
                    page_icon=':cinema:')
 
 # Picture and dashboard title
 st.image(clean.dashboard_img)
-st.title("Bienvenue sur CineCreuse")
+st.title("Bienvenue sur CinéCreuse")
+
 
 # Implement selection widgets in sidebar
 starting_year = st.sidebar. number_input('Choisissez une année de départ',
@@ -44,7 +45,7 @@ ending_year = st.sidebar.number_input('Choisissez une année de fin',
 
 
 start_votes, end_votes = st.sidebar.select_slider(
-        'Selectionnez un nombre de votes ',
+        'Sélectionnez un nombre de votes ',
         options=range(KPI_aur.df_movies_year_run_ratings["numVotes"].min(),
                       KPI_aur.df_movies_year_run_ratings["numVotes"].max()+2),
             #KPI_aur.df_movies_year_run_ratings["numVotes"].sort_values(),
@@ -64,11 +65,11 @@ list_genres = st.sidebar.multiselect('Sélectionnez votre genre',
 
 st.header("Année de sortie et durée")
 # Define several tabs within first dashboard part
-tab1_ax1, tab2_ax1, tab3_ax1, tab4_ax1, tab5_ax1 = st.tabs(["Nombre films",
+tab1_ax1, tab2_ax1, tab3_ax1, tab4_ax1, tab5_ax1 = st.tabs(["Nombre de films",
                                                             "Durée",
                                                             "Durée par notation",
                                                             "Top 20",
-                                                            "Notation et votes"])
+                                                            "Notations et votes"])
 
 # C. Define second dashboard part
 # ----------
@@ -82,16 +83,16 @@ tab1_ax2, tab2_ax2, tab3_ax2 = st.tabs(["Nombre de films",
 # D. Define third dashboard part
 # -----------
 
-st.header("Axe 3")
+st.header("Acteurs et actrices")
 # Define several tabs within streamlit app
-tab1_ax3, tab2_ax3 = st.tabs(["tab1_ax3", "tab2_ax3"])
+tab1_ax3, tab2_ax3, tab3_ax3 = st.tabs(["Acteurs", "Actrices", "Répartition"])
 
 # E. Define fourth dashboard part
 # ----------
 
-st.header("Axe 4")
+st.header("Equipe de réalisation")
 # Define several tabs within streamlit app
-tab1_ax4, tab2_ax4 = st.tabs(["tab1_ax4", "tab2_ax4"])
+tab1_ax4, tab2_ax4, tab3_ax4 = st.tabs(["Réalisateurs", "Scénaristes", "Compositeurs"])
 
 ##########
 # 2. Attach chart (seaborn, plotly.express)
@@ -130,7 +131,8 @@ with tab4_ax1:
 with tab5_ax1:
     fig_tab5_ax1 = KPI_aur.rate_numVote(starting_year,
                                         ending_year,
-                                        [elem for elem in range(start_votes, end_votes)])
+                                        [elem for elem in range(start_votes, end_votes)],
+                                        list_genres)
 
     st.plotly_chart(fig_tab5_ax1, use_container_width=True)
 
@@ -151,3 +153,55 @@ with tab3_ax2:
     fig_tab3_ax2 = KPI_moh.duree_film_genre2()
     st.plotly_chart(fig_tab3_ax2, use_container_width=True)
 
+
+# C. 3e axe => Acteurs & actrices
+# -----------
+
+# Analyse du top 10 des acteurs
+with tab1_ax3:
+    fig_tab1_ax3 = KPI_ale.top10_actors (starting_year,
+                                         ending_year,
+                                         [elem for elem in range(start_votes, end_votes)])
+    st.plotly_chart(fig_tab1_ax3, use_container_width=True)
+
+
+# Analyse du top 10 des actrices
+with tab2_ax3:
+    fig_tab2_ax3 = KPI_ale.top10_actress (starting_year,
+                                          ending_year,
+                                          [elem for elem in range(start_votes, end_votes)])
+    st.plotly_chart(fig_tab2_ax3, use_container_width=True)
+
+
+# Analyse de la répartition acteurs / actrices
+with tab3_ax3:
+
+    fig_tab3_ax3 = KPI_ale.proportion_act(starting_year,
+                                          ending_year,
+                                          [elem for elem in range(start_votes, end_votes)])
+    st.plotly_chart(fig_tab3_ax3, use_container_width=True)
+
+
+# D. 4e axe => Equipe de réalisation
+# -----------
+
+# Analyse du top 10 des directeurs
+with tab1_ax4:
+    fig_tab1_ax4 = KPI_mar.top10_directors (starting_year,
+                                            ending_year,
+                                            [elem for elem in range(start_votes, end_votes)])
+    st.plotly_chart(fig_tab1_ax4, use_container_width=True)
+
+# Analyse du top 10 des scénaristes
+with tab2_ax4:
+    fig_tab2_ax4 = KPI_mar.top10_writers (starting_year,
+                                          ending_year,
+                                          [elem for elem in range(start_votes, end_votes)])
+    st.plotly_chart(fig_tab2_ax4, use_container_width=True)
+
+# Analyse du top 10 des compositeurs
+with tab3_ax4:
+    fig_tab3_ax4 = KPI_mar.top10_composers (starting_year,
+                                            ending_year,
+                                            [elem for elem in range(start_votes, end_votes)])
+    st.plotly_chart(fig_tab3_ax4, use_container_width=True)

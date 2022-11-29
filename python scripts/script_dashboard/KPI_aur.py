@@ -402,20 +402,38 @@ def top_20_year(starting_year, ending_year, list_votes, list_genre):
 # ----------
 
 
-def rate_numVote(starting_year, ending_year, list_votes):
+def rate_numVote(starting_year, ending_year, list_votes, list_genre):
     """
     Return scatter plot of rates according to number of votes
     :param starting_year: starting point of selection
     :param ending_year: ending point of selection
     :param list_votes: selection on number of votes
+    :param list_genre: selection on genre
     :return: scatter plot
     """
 
+    # Merge with title genre clean
+    df_rate_numVote = pd.merge(df_movies_year_run_ratings,
+                               clean.df_title_genre_clean,
+                               how='inner',
+                               on='tconst')
+
+    # Filter on selected genre
+    if len(list_genre) == 0:
+        pass
+    else:
+        df_rate_numVote = df_rate_numVote.loc[df_rate_numVote["genres"].isin(list_genre)]
+
+    # Drop duplicates
+    df_rate_numVote.drop_duplicates(subset=["tconst"],
+                                    inplace=True,
+                                    ignore_index=True)
+
     # Keep only needed columns
-    df_rate_numVote = df_movies_year_run_ratings.loc[:, ["primaryTitle",
-                                                         "startYear",
-                                                         "averageRating",
-                                                         "numVotes"]]
+    df_rate_numVote = df_rate_numVote.loc[:, ["primaryTitle",
+                                              "startYear",
+                                              "averageRating",
+                                              "numVotes"]]
 
     # Filter on selected years
     df_rate_numVote = df_rate_numVote.loc[(df_rate_numVote["startYear"] >= starting_year) &

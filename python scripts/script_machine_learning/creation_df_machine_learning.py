@@ -68,11 +68,6 @@ df_machine_learning = pd.merge(df_machine_learning,
 df_machine_learning = pd.concat([df_machine_learning,
                                  df_machine_learning['genres'].str.get_dummies()],
                                 axis = 1)
-
-df_film_selection = df_machine_learning[["title", "startYear"]]
-
-df_film_selection.drop_duplicates("title", inplace=True)
-
 """
 # Créer nouveau df :
 # Boucle :
@@ -119,62 +114,104 @@ type(df_machine_learning.loc[row, column])
 df_machine_learning.loc[row, :]
 a = df_machine_learning.loc[row, 'tconst']
 """
-# #############################################################diminution de la DataFrame #######################################################################
-#
-# ####       netvoyage avec une note moyenne de vote plus que 5    ###
-#
-# indexNames = df_machine_learning[ df_machine_learning['averageRating'] <= 5 ].index
-# indexNames
-# df_machine_learning.drop(index=indexNames,inplace = True)
-# df_machine_learning=df_machine_learning.reset_index( drop = True )
-# ##################################################################
-#
-# #    natvoyage avec une un nombre de vu plus que 389###################
-# indexNames2=df_machine_learning[df_machine_learning['numVotes']<=389].index
-# df_machine_learning.drop(index=indexNames2,inplace = True)
-# df_machine_learning=df_machine_learning.reset_index( drop = True )
-#
-#
-#
-#
-#
-# ####################################################################
-#
-# df_drop_mavhine_lerning = df_machine_learning[df_machine_learning[averegeRating]>=5]
-#
-# df_total=df_machine_learning.iloc[0:1]
-# df_total.shape
-# #je supprime la colone 'genres' qu'on a plus besoin
-# df_total=df_total.drop(['genres'], axis=1)
-# df_total
-# #je boucke un code pour faire la fusion des colonne qui contienne 0ou 1
-# for i in df_machine_learning['tconst']:
-#     print(i)
-#     #création d'une DataFrame vide
-#     df_final = []
-#     #choisir un film avec tconst
-#     df_modif = df_machine_learning[df_machine_learning['tconst'] == i]
-#     # prendre un interval des valeurs qui nous intéresse, puis aditionner les ligne
-#     df_cumul = df_modif.values[: , 6:33].sum( axis = 0 )
-#     #la partie qui change pas , on prends une seuls ligne en cas ou il y a plusieurs par film
-#     df_static = df_modif.values[0:1 , 0:5]
-#     #convertir le array np en DataFrame
-#     df_cumul = pd.DataFrame( df_cumul )
-#     #transposer le DataFrame
-#     df_cumul = df_cumul.T
-#     #convertir la deuxième partir en DataFrame
-#     df_static = pd.DataFrame( df_static )
-#     #composer la ligne de film
-#
-#     df_final = pd.concat( [df_static , df_cumul] , axis = 1 )
-#     #renommer les colonne
-#     df_final.set_axis( ['title' , 'tconst' , 'startYear' , 'averageRating' , 'numVotes' , 'Action' ,
-#                         'Adult' , 'Adventure' , 'Animation' , 'Biography' , 'Comedy' , 'Crime' ,
-#                         'Documentary' , 'Drama' , 'Family' , 'Fantasy' , 'Film-Noir' , 'History' ,
-#                         'Horror' , 'Music' , 'Musical' , 'Mystery' , 'News' , 'Reality-TV' ,
-#                         'Romance' , 'Sci-Fi' , 'Short' , 'Sport' , 'Thriller' , 'Unknown' , 'War' ,
-#                         'Western'] , axis = 'columns' , inplace = True )
-#     #composer le DataFrame Total
-#     df_total = pd.concat( [df_total , df_final] )
-#     df_total_sans_doublant=df_total.drop_duplicates()
-#     df_machine_learning_2=df_total_sans_doublant.reset_index(inplace = True)
+#############################################################diminution de la DataFrame #######################################################################
+
+####       netvoyage avec une note moyenne de vote plus que 5    ###
+
+indexNames = df_machine_learning[ df_machine_learning['averageRating'] <= 5 ].index
+indexNames
+df_machine_learning.drop(index=indexNames,inplace = True)
+df_machine_learning=df_machine_learning.reset_index( drop = True )
+##################################################################
+
+#    natvoyage avec une un nombre de vu plus que 389###################
+indexNames2=df_machine_learning[df_machine_learning['numVotes']<=389].index
+df_machine_learning.drop(index=indexNames2,inplace = True)
+df_machine_learning=df_machine_learning.reset_index( drop = True )
+
+
+
+
+
+####################################################################
+'''
+df_drop_mavhine_lerning = df_machine_learning[df_machine_learning[averegeRating]>=5]
+
+df_total=df_machine_learning.iloc[0:1]
+df_total.shape
+#je supprime la colone 'genres' qu'on a plus besoin
+df_total=df_total.drop(['genres'], axis=1)
+df_total
+#je boucke un code pour faire la fusion des colonne qui contienne 0ou 1
+for i in df_machine_learning['tconst']:
+    print(i)
+    #création d'une DataFrame vide
+    df_final = []
+    #choisir un film avec tconst
+    df_modif = df_machine_learning[df_machine_learning['tconst'] == i]
+    # prendre un interval des valeurs qui nous intéresse, puis aditionner les ligne
+    df_cumul = df_modif.values[: , 6:33].sum( axis = 0 )
+    #la partie qui change pas , on prends une seuls ligne en cas ou il y a plusieurs par film
+    df_static = df_modif.values[0:1 , 0:5]
+    #convertir le array np en DataFrame
+    df_cumul = pd.DataFrame( df_cumul )
+    #transposer le DataFrame
+    df_cumul = df_cumul.T
+    #convertir la deuxième partir en DataFrame
+    df_static = pd.DataFrame( df_static )
+    #composer la ligne de film
+
+    df_final = pd.concat( [df_static , df_cumul] , axis = 1 )
+    #renommer les colonne
+    df_final.set_axis( ['title' , 'tconst' , 'startYear' , 'averageRating' , 'numVotes' , 'Action' ,
+                        'Adult' , 'Adventure' , 'Animation' , 'Biography' , 'Comedy' , 'Crime' ,
+                        'Documentary' , 'Drama' , 'Family' , 'Fantasy' , 'Film-Noir' , 'History' ,
+                        'Horror' , 'Music' , 'Musical' , 'Mystery' , 'News' , 'Reality-TV' ,
+                        'Romance' , 'Sci-Fi' , 'Short' , 'Sport' , 'Thriller' , 'Unknown' , 'War' ,
+                        'Western'] , axis = 'columns' , inplace = True )
+    #composer le DataFrame Total
+    df_total = pd.concat( [df_total , df_final] )
+    df_total_sans_doublant=df_total.drop_duplicates()
+    df_machine_learning_2=df_total_sans_doublant.reset_index(inplace = True)
+'''
+#################################################### Le même code avec NUMPY  ################################
+df_final = []
+df_modif = df_machine_learning[df_machine_learning['tconst'] == 'tt0010323']
+df_cumul = df_modif.values[: , 6:33].sum( axis = 0 )
+df_static = df_modif.values[0:1 , 0:5]
+df_cumul = pd.DataFrame( df_cumul )
+df_cumul = df_cumul.T
+df_static = pd.DataFrame( df_static )
+
+df_final = pd.concat( [df_static , df_cumul] , axis = 1 )
+df_final.set_axis(['title', 'tconst', 'startYear', 'averageRating', 'numVotes', 'Action',
+       'Adult', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime',
+       'Documentary', 'Drama', 'Family', 'Fantasy', 'Film-Noir', 'History',
+       'Horror', 'Music', 'Musical', 'Mystery', 'News', 'Reality-TV',
+       'Romance', 'Sci-Fi', 'Short', 'Sport', 'Thriller', 'Unknown', 'War',
+       'Western'], axis='columns', inplace=True)
+df_total = pd.concat( [df_total, df_final])
+##############################################################################################
+df_modif = df_machine_learning[df_machine_learning['tconst'] == 'tt0010323']
+df_cumul = df_modif.values[: , 6:33].sum( axis = 0 )
+df_static = df_modif.values[0:1 , 0:5]
+numpy_first=np.concatenate((df_static,df_cumul),axis=None)
+for i in df_machine_learning['tconst']:
+    print(i)
+    df_modif = df_machine_learning[df_machine_learning['tconst'] == i]
+    df_cumul = df_modif.values[: , 6:33].sum( axis = 0 )
+    df_static = df_modif.values[0:1 , 0:5]
+    ligne_film = np.concatenate( (df_static , df_cumul) , axis = None )
+
+    numpy_first = np.column_stack((numpy_first , ligne_film))
+
+array=numpy_first.T
+df_machine_learning_clean=pd.DataFrame(array,columns =['title', 'tconst', 'startYear', 'averageRating', 'numVotes', 'Action',
+       'Adult', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime',
+       'Documentary', 'Drama', 'Family', 'Fantasy', 'Film-Noir', 'History',
+       'Horror', 'Music', 'Musical', 'Mystery', 'News', 'Reality-TV',
+       'Romance', 'Sci-Fi', 'Short', 'Sport', 'Thriller', 'Unknown', 'War',
+       'Western'] )
+df_machine_learning_clean=df_machine_learning_clean.drop_duplicates()
+df_machine_learning_clean=df_machine_learning_clean.reset_index(drop= True)
+df_machine_learning_clean=.to_csv (f"{ct.directory_mohammed}title_machine_learning_clean.csv", sep = ",", index = False)
