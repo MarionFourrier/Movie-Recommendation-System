@@ -1,4 +1,4 @@
-# :car:  Movie-Recommendation-System 
+# :clapper:  Movie-Recommendation-System 
 *Student Project with Python and Streamlit*
 
 ## :beginner: Subject 
