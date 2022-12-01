@@ -1,4 +1,4 @@
-# :car:  Movie-Recommendation_System 
+# :car:  Movie-Recommendation-System 
 *Student Project with Python and Streamlit*
 
 ## :beginner: Subject 
