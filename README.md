@@ -1,2 +1,19 @@
-# Projet2_WCS
-Projet 2 Wild Code School
+# :car:  Movie-Recommendation_System 
+*Student Project with Python and Streamlit*
+
+## :beginner: Subject 
+
+ppp
+
+
+## :dart: Product Backlogs
+
+ppp
+
+
+## :wrench: Tools
+
+![Picture1](Pictures/WorkflowDiagram.png)
+
+
+## :handshake: Team
