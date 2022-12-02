@@ -5,7 +5,7 @@
 
 ## :beginner: Subject 
 
-A cinema situated in the lovely region of Creuse in France contacted us to created a movie recommendation system. 
+A cinema located in the lovely region of Creuse in France contacted us to created a movie recommendation system. 
 An analysis of the database, with visual KPIs, are also ordered.
 
 
