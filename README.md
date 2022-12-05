@@ -5,6 +5,8 @@
 
 *However, you can take a look to the following video files : Dashboard.webm and Recommendation.webm.*
 
+![](Recommendation_System.gif)
+
 ## :beginner: Subject 
 
 A cinema located in the lovely region of Creuse in France contacted us to create a movie recommendation system. 
