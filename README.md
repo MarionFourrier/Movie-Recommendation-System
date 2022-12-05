@@ -3,6 +3,8 @@
 
 *As our csv files were too heavy, we coudn't put them on Git. Thus you won't be able to run those scripts.*
 
+*However, you can take a look to the following video files : Dashboard.webm and Recommendation.webm.*
+
 ## :beginner: Subject 
 
 A cinema located in the lovely region of Creuse in France contacted us to create a movie recommendation system. 
