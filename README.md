@@ -6,9 +6,6 @@ However you can take a look to our video files.*
 
 ![](Pictures/VIDEO_Recommendation_System.gif)
 
-*However, you can take a look to the following video files : Dashboard.webm and Recommendation.webm.*
-
-![](Recommendation_System.gif)
 
 ## :beginner: Subject 
 
