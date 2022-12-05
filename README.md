@@ -1,7 +1,10 @@
 # :clapper:  Movie-Recommendation-System 
 *Student Project with Python and Streamlit*
 
-*As our csv files were too heavy, we coudn't put them on Git. Thus you won't be able to run those scripts.*
+*As our csv files were too heavy, we coudn't put them on Git. Thus you won't be able to run those scripts.  
+However you can take a look to our video files.*
+
+![](Pictures/VIDEO_Recommendation_System.gif)
 
 ## :beginner: Subject 
 
